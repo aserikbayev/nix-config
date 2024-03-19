@@ -10,57 +10,93 @@
   ## https://github.com/LnL7/nix-darwin/blob/master/modules/examples/flake/flake.nix
 
   homebrew = {
-  enable = true;
-  onActivation = {
-      autoUpdate = true;
+    enable = true;
+    onActivation = {
+      # "zap" removes manually installed brews and casks
       cleanup = "zap";
+      autoUpdate = true;
       upgrade = true;
-  };
-  brewPrefix = "/opt/homebrew/bin";
-  caskArgs = {
+    };
+    brewPrefix = "/opt/homebrew/bin";
+    caskArgs = {
       no_quarantine = true;
-  };
-  brews = [ "autoenv" ];
-  casks = [
-      #"telegram"
-      "android-commandlinetools"
-      "crossover"
-      "dbeaver-community"
-      "font-hack-nerd-font"
-      "gimp"
-      "hiddenbar"
-      "jetbrains-toolbox"
-      "kap"
-      "keka"
-      "keycastr"
-      "krita"
-      "openmtp"
-      #"podman-desktop"
-      "raycast"
-      "rectangle"
-      "stats"
-      "syncthing"
-      "time-out"
-      "tor-browser"
-      "vlc"
-      "zotero"
+    };
+    brews = [];
+    casks = [
+    #"telegram"
+    "android-commandlinetools"
+    "crossover"
+    "dbeaver-community"
+    "font-hack-nerd-font"
+    "gimp"
+    "hiddenbar"
+    "jetbrains-toolbox"
+    "kap"
+    "keka"
+    "keycastr"
+    "krita"
+    "openmtp"
+    #"podman-desktop"
+    "raycast"
+    "rectangle"
+    "stats"
+    "syncthing"
+    "time-out"
+    "tor-browser"
+    "vlc"
+    "zotero"
     ];
   };
+  # System-Wide Packages
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    (python311.withPackages(ps: with ps; [ 
-    pip 
-    jmespath
-    requests
-    setuptools
-    pyyaml
-    ]))
+    ## Terminal
     vim
+    tree
+    parallel
+    curl
+    wget
+    ripgrep
+    fd
+    sd
+    rsync
+    bc
+    jq
+    just
+    ueberzugpp
+    eza # A modern, maintained replacement for ls
+    neofetch
+    tmux
+    ncdu
+    nmap
+    yq
+    
+    # mosh # mobile shell, replacement for ssh connections
+    httpie
+
+    ## git
+    gh
     git-lfs
     pre-commit
     bfg-repo-cleaner
-    gh
+
+    ## ssh
+    # openssh
+    # ssh-copy-id
+
+    ## age
+    # age-plugin-yubikey
+    # age
+    # agenix
+
+    ## archive
+    xz
+    zstd
+    lz4
+    p7zip
+
+    ## programming
     go
     gotools
     gopls
@@ -69,41 +105,68 @@
     gocode-gomod
     godef
     golint
+    rustc
+    (python311.withPackages(ps: with ps; [ 
+    pip 
+    jmespath
+    requests
+    setuptools
+    pyyaml
+    ]))
+    llvm
+    vscode
+
+    ## ops
     colima
     docker
     docker-compose
     docker-credential-helpers
     utm
-    wget
+    
+    ## idk
     #git-crypt
     #iperf3
     #deploy-rs
-    eza # A modern, maintained replacement for ls
-    neofetch
-    tmux
-    rsync
-    ncdu
-    nmap
-    jq
-    yq
-    ripgrep
+    
     sqlite
     pwgen
     gnupg
+    
+    ## media
     yt-dlp
     ffmpeg
-    # mosh # mobile shell, replacement for ssh connections
+    qpdf
+    graphicsmagick
+    aria2
+    pandoc
+    tectonic
+    typst
+    
     discord
-    httpie
     slack
     mattermost
+    
     # sentry-cli
-    vscode
+  ];
+
+  fonts = {
+    fontDir.enable = true;
+    fonts = with pkgs; [
+      font-awesome
+      twemoji-color-font
+      (nerdfonts.override {
+        fonts = [
+          "Hack"
+        ];
+      })
     ];
+  };
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = lib.mkForce true;
   # nix.package = pkgs.nix;
+
+  nix.gc.interval.Day = 7;
 
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";
