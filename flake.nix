@@ -9,6 +9,10 @@
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-index-database = {
+      url = "github:Mic92/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # deploy-rs.url = "github:serokell/deploy-rs";
   };
 
@@ -17,6 +21,7 @@
     nixpkgs,
     nix-darwin,
     home-manager,
+    nix-index-database,
     # deploy-rs
     ...
     }@inputs:

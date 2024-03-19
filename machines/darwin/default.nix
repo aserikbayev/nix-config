@@ -25,15 +25,15 @@
           stateVersion = "24.05";
         };
         
-        # imports = [
+        imports = [
         #   inputs.nix-index-database.hmModules.nix-index
         #   inputs.agenix.homeManagerModules.default
-        #   ../../users/username/dots.nix
+          ../../users/azatserikbayev/dots.nix
         #   ../../users/username/age.nix
         #   ../../dots/tmux
         #   ../../dots/firefox
         #   ../../dots/kitty
-        # ];
+        ];
       };
 
     backupFileExtension = "bak";
