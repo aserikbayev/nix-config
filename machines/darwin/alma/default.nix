@@ -6,6 +6,9 @@
 #     ulimit -n 2048
 #     '';
 
+  ## This flake was initially created from
+  ## https://github.com/LnL7/nix-darwin/blob/master/modules/examples/flake/flake.nix
+
   homebrew = {
   enable = true;
   onActivation = {
@@ -98,11 +101,9 @@
     vscode
     ];
 
+  # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = lib.mkForce true;
-
-  # # Auto upgrade nix package and the daemon service.
-  # services.nix-daemon.enable = true;
-  # # nix.package = pkgs.nix;
+  # nix.package = pkgs.nix;
 
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";
@@ -110,6 +111,9 @@
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;  # default shell on catalina
   # programs.fish.enable = true;
+
+  # Set Git commit hash for darwin-version. (I've no idea what this does)
+  system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

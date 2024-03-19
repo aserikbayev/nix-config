@@ -37,9 +37,6 @@
       ];
     };
 
-    # Set Git commit hash for darwin-version. (I've no idea what this does)
-    system.configurationRevision = self.rev or self.dirtyRev or null;
-
     # Deploy to other hosts using deploy-rs
     # https://github.com/notthebee/nix-config/blob/main/machines/darwin/default.nix
     # deploy.nodes = {
