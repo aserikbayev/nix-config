@@ -33,7 +33,7 @@ nix run nix-darwin -- switch --flake github:aserikbayev/nix-config#alma
 
 **Cloning the repository first**
 ```
-git clone https://github.com/notthebee/nix-config.git ~/nix-config
+git clone https://github.com/aserikbayev/nix-config.git ~/nix-config
 cd ~/nix-config
 nix run nix-darwin -- switch --flake .
 ```
